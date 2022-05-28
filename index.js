@@ -12,9 +12,23 @@ let prefix = '-'
 
 client.once('ready', () => {
     console.log(`\nPrefix:${prefix} \nName: ${client.user.tag}\n `);
-    client.user.setPresence({ activities: [{ name: 'with new suggestions' }],type: 'WATCHING', status: 'dnd' });
+    client.user.setPresence({ activities: [{ name: 'with new requests' }],type: 'PLAYING', status: 'idle' });
     })
 
+
+
+// USER DM EVENT
+let openlist = []
+client.on('messageCreate',async message => {
+if (message.guild||message.author.bot) return
+let msg = message.content
+
+//new ticket to open
+if (!openlist.includes(message.author.id)){
+let embed = new MessageEmbed()
+.setTitle('Hello, '+message.author.tag,' a staff member will reach out for you')
+}
+})
 
 
 
