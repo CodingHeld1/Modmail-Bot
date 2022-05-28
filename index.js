@@ -27,6 +27,7 @@ let msg = message.content
 if (!openlist.includes(message.author.id)){
 let embed = new MessageEmbed()
 .setTitle('Hello, '+message.author.tag,' a staff member will reach out for you')
+message.author.send({embeds:[embed]})
 }
 })
 
