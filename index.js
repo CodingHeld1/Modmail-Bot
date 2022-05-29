@@ -14,11 +14,11 @@ const client = new Client({
 })
 const config = require('./config.json')
 
-//Variables 
-let prefix = '-'
-let s_id = '980430959700766751'
-let sroleid = '932315525416095855'
-let guildid = '915652722815041557'
+//Variables
+let prefix = config.prefix
+let s_id = config.s_id
+let sroleid = config.sroleid
+let guildid = config.guildid
 client.once('ready', () => {
     console.log(`\nPrefix:${prefix} \nName: ${client.user.tag}\n `);
     client.user.setPresence({ activities: [{ name: 'with new requests' }],type: 'PLAYING', status: 'idle' });

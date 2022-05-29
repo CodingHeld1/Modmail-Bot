@@ -1,3 +1,8 @@
 {
-    "token": "insert-token"
-  }
+    "prefix": "-",  
+    "token": "insert-token",
+    "s_id": "staff-channel-id",
+    "sroleid": "staff-role-id",
+    "guildid": "guild-id"
+}
+
