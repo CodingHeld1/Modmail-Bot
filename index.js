@@ -16,7 +16,7 @@ const config = require('./config.json')
 
 //Variables 
 let prefix = '-'
-let s_id = '965957179393867786'
+let s_id = '980430959700766751'
 let sroleid = '932315525416095855'
 let guildid = '915652722815041557'
 client.once('ready', () => {
@@ -76,11 +76,12 @@ guildid_f1.channels.create(`ticket-${message.author.id}`, {
 }
 let guildid_f1 = client.guilds.cache.get(guildid) 
 if (guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}`)){
+    let ticket = guildid_f1.channels.cache.get(guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}`).id)
     let args = message.content 
     let embed = new MessageEmbed()
     .setDescription(`> ${args}`)
     .setFooter({text: `Sent by ${message.author.tag}`})
-    staff.send({embeds:[embed]})
+    ticket.send({embeds:[embed]})
 }
 
 
