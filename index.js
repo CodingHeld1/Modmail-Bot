@@ -24,10 +24,7 @@ client.once('ready', () => {
     client.user.setPresence({ activities: [{ name: 'with new requests' }],type: 'PLAYING', status: 'idle' });
     })
 
-
-
 // USER DM EVENT
-let openlist = []
 client.on('messageCreate',async message => {
 let staff = client.channels.cache.get(s_id)
 if (message.channel.type != 'DM')return
@@ -39,7 +36,6 @@ if (!guildid_f.channels.cache.find(ch => ch.name == `ticket-${message.author.id}
 let embed = new MessageEmbed()
 .setTitle('Hello, '+message.author.tag+', a ticket has been opened')
 message.author.send({embeds:[embed]}).then(() => message.react('👍'))
-
 let s_embed = new MessageEmbed()
 .setTitle('New ticket')
 .setDescription(`The user ${message.author.tag} has a request and is waiting for our answer, please answer him regarding his question! His message:\n${args}`)
@@ -68,11 +64,6 @@ guildid_f1.channels.create(`ticket-${message.author.id}`, {
     channel.send({embeds:[embed]})
  
 });
-
-
-
-
-
 }
 let guildid_f1 = client.guilds.cache.get(guildid) 
 if (guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}`)){
@@ -83,22 +74,21 @@ if (guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}
     .setFooter({text: `Sent by ${message.author.tag}`})
     ticket.send({embeds:[embed]})
 }
-
-
-
-
 })
 
 
-
 client.on('messageCreate' , async message => {
-    if (!message.content.includes(prefix)) return
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
     if (!message.guild) return 
     if (message.author.bot) return;
 
-
+if (message.channel.name.includes('ticket-')){
+    let mcm = message.channel.name
+    let userid = mcm.split("-")[1]
+    let user = message.guild.members.get(userid)
+    user.send(args)
+}
 
 
 })
