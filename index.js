@@ -66,7 +66,7 @@ if (guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}
     let ticket = guildid_f1.channels.cache.get(guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}`).id)
     let args = message.content 
     let embed = new MessageEmbed()
-    .setDescription(`> ${args}`)
+    .setDescription(`${args}`)
     .setFooter({text: `Sent by ${message.author.tag}`})
     ticket.send({embeds:[embed]})
 }
