@@ -34,15 +34,10 @@ let args = message.content
 let guildid_f = client.guilds.cache.get(guildid)
 if (!guildid_f.channels.cache.find(ch => ch.name == `ticket-${message.author.id}`)){
 let embed = new MessageEmbed()
-.setTitle('Hello, '+message.author.tag+', a ticket has been opened')
+.setTitle('Hello, '+message.author.tag+'. You have successfully created a ticket! A staff member will answer you soon.')
 message.author.send({embeds:[embed]}).then(() => message.react('👍'))
-let s_embed = new MessageEmbed()
-.setTitle('New ticket')
-.setDescription(`The user ${message.author.tag} has a request and is waiting for our answer, please answer him regarding his question! His message:\n${args}`)
-await staff.send(`<@&${sroleid}>`)
-await staff.send({embeds:[s_embed]})
-let guildid_f1 = client.guilds.cache.get(guildid)
 
+let guildid_f1 = client.guilds.cache.get(guildid)
 guildid_f1.channels.create(`ticket-${message.author.id}`, {
     permissionOverwrites: [
         {
@@ -56,17 +51,19 @@ guildid_f1.channels.create(`ticket-${message.author.id}`, {
     ],
     type: 'text',
 }).then(async channel => {
-    message.author.send(`you have successfully created a ticket! Please click on ${channel} to view your ticket.`);
-    channel.send(`${message.author.tag} created a new ticket`);
-    let embed = new MessageEmbed()
-    .setDescription(`> ${args}`)
-    .setFooter({text: `Sent by ${message.author.tag}`})
-    channel.send({embeds:[embed]})
- 
+    message.author.send(`you have successfully created a ticket! A staff member will answer you soon.`);
+    let s_embed = new MessageEmbed()
+        .setTitle('New ticket')
+        .setDescription(`The user ${message.author.tag} has a request and is waiting for our answer, please answer him regarding his question! His message:\n${args}`)
+    await channel.send(`<@&${sroleid}>`)
+    await channel.send({embeds:[s_embed]})
+    
 });
 }
 let guildid_f1 = client.guilds.cache.get(guildid) 
+//Ticket is already there
 if (guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}`)){
+    message.react('👍')
     let ticket = guildid_f1.channels.cache.get(guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}`).id)
     let args = message.content 
     let embed = new MessageEmbed()
@@ -76,21 +73,33 @@ if (guildid_f1.channels.cache.find(ch => ch.name == `ticket-${message.author.id}
 }
 })
 
-
 client.on('messageCreate' , async message => {
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
     if (!message.guild) return 
-    if (message.author.bot) return;
-
+    if (message.author.bot) return; 
 if (message.channel.name.includes('ticket-')){
+    if (command === 'close'){
+        let mcm = message.channel.name
+        let userid = mcm.split("-")[1]
+        let embed = new MessageEmbed()
+        .setTitle('Your ticket has been resolved!')
+        .setTimestamp()
+        client.users.send(userid, {embeds:[embed]})
+        message.channel.delete()
+    }
+    else{
+    message.react('👍')
     let mcm = message.channel.name
     let userid = mcm.split("-")[1]
-    let user = message.guild.members.get(userid)
-    user.send(args)
+    //let user = message.guild.members.cache.get(userid)
+    //user.send(message.content)
+    let embed = new MessageEmbed()
+    .setDescription(message.content)
+    .setFooter({text:`sent by ${message.author.tag}`})
+    client.users.send(userid, {embeds:[embed]}) 
+    }
 }
-
-
 })
 client.login(config.token)
       
