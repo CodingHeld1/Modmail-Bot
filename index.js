@@ -51,7 +51,6 @@ guildid_f1.channels.create(`ticket-${message.author.id}`, {
     ],
     type: 'text',
 }).then(async channel => {
-    message.author.send(`you have successfully created a ticket! A staff member will answer you soon.`);
     let s_embed = new MessageEmbed()
         .setTitle('New ticket')
         .setDescription(`The user ${message.author.tag} has a request and is waiting for our answer, please answer him regarding his question! His message:\n${args}`)
